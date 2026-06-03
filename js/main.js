@@ -291,6 +291,13 @@
 			alt: 'Football player Bruno Fernandes poster',
 			tools: ['Photoshop', '2 Hour'],
 		},
+		{
+			name: 'Vitinha',
+			type: 'Poster Design · Football',
+			src: 'assets/images/DesignVitinha.webp',
+			alt: 'Football player Vitinha poster',
+			tools: ['Photoshop', '1 Hour'],
+		},
 	];
 
 	// ➕ To add a game: { emoji, type, name, desc, obj, tools, url, caseId }
