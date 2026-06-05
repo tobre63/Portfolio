@@ -258,7 +258,7 @@
 	const POSTERS = [
 		{
 			name: 'Neemias Queta',
-			type: 'Poster Design · NBA',
+			type: 'Poster Design · Basketball',
 			src: 'assets/images/DesignNeemias.webp',
 			alt: 'Basketball player Neemias Queta poster',
 			tools: ['Photoshop', '7 Hours'],
@@ -297,6 +297,13 @@
 			src: 'assets/images/DesignVitinha.webp',
 			alt: 'Football player Vitinha poster',
 			tools: ['Photoshop', '1 Hour'],
+		},
+		{
+			name: 'Jared McCain',
+			type: 'Poster Design · Basketball',
+			src: 'assets/images/DesignJaredMcCain.webp',
+			alt: 'Basketball player Jared McCain poster',
+			tools: ['Photoshop', '3 Hour'],
 		},
 	];
 
@@ -549,7 +556,7 @@
       photo: "" // ex: "assets/images/testimonials/jose-dias.webp"
     },*/
 		{
-			text: 'Placeholder',
+			text: 'Super fast, organized, and highly professional work. He took the initiative to offer his help without me even asking. It’s clear he loves this field and is genuinely great at what he does.',
 			name: 'Luis Torres',
 			role: 'Owner of Happy Bubbles Laundry',
 			initials: 'LT',
@@ -622,7 +629,7 @@
   -------------------------------------------------- */
 	const defaultLinks = [
 		{ name: 'Instagram', url: 'https://instagram.com/vlg.bre' },
-		{ name: 'Behance', url: 'https://behance.net/antniobr' },
+		{ name: 'Behance', url: 'https://behance.net/antniobre' },
 		{ name: 'GitHub', url: 'https://github.com/tobre63' },
 		{
 			name: 'LinkedIn',
