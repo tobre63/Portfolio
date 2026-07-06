@@ -136,19 +136,17 @@
 		ry = 0;
 
 	if (hasHover && cursorEl && ringEl) {
-		document.addEventListener('mousemove', (e) => {
-			mx = e.clientX;
-			my = e.clientY;
-			cursorEl.style.left = mx + 'px';
-			cursorEl.style.top = my + 'px';
-			const el = document.elementFromPoint(mx, my);
-			const dark =
-				el &&
-				!!el.closest(
-					'#about, #testimonials, #casestudy footer, .proj-card:hover, .bottom-nav',
-				);
-			document.body.classList.toggle('on-dark', dark);
-		});
+		// Cheap: only writes position, no layout-forcing reads.
+		document.addEventListener(
+			'mousemove',
+			(e) => {
+				mx = e.clientX;
+				my = e.clientY;
+				cursorEl.style.left = mx + 'px';
+				cursorEl.style.top = my + 'px';
+			},
+			{ passive: true },
+		);
 
 		(function animateRing() {
 			rx += (mx - rx) * 0.12;
@@ -158,6 +156,9 @@
 			requestAnimationFrame(animateRing);
 		})();
 
+		// mouseover only fires on element-boundary crossings (not on every
+		// pixel of movement like mousemove), so it's the cheap place to do
+		// ancestor lookups — avoids calling elementFromPoint() continuously.
 		document.addEventListener('mouseover', (e) => {
 			const isInteractive = e.target.closest(
 				'a, button, .proj-card, .proj-row, .c-link, .s-link, .tool-tag, .case-cta, .cs-acc-trigger',
@@ -166,18 +167,14 @@
 			cursorEl.style.height = isInteractive ? '16px' : '10px';
 			ringEl.style.width = isInteractive ? '48px' : '34px';
 			ringEl.style.height = isInteractive ? '48px' : '34px';
+
+			const dark = !!e.target.closest(
+				'#about, #testimonials, #casestudy footer, .proj-card, .bottom-nav',
+			);
+			document.body.classList.toggle('on-dark', dark);
 		});
 	}
 
-	/* --------------------------------------------------
-     LOADER
-  -------------------------------------------------- */
-	window.addEventListener('load', () => {
-		setTimeout(() => {
-			const l = document.getElementById('loader');
-			if (l) l.classList.add('hide');
-		}, 900);
-	});
 
 	/* --------------------------------------------------
      FADE-IN ON SCROLL
@@ -307,6 +304,36 @@
 		},
 	];
 
+	/* --------------------------------------------------
+     LOADER — kept on screen until the poster preview images
+     are decoded (not just downloaded), so Work's hover preview
+     never has to decode a multi-megapixel image for the first
+     time while the user is actually interacting with it. A
+     safety timeout keeps a slow connection from stalling it.
+  -------------------------------------------------- */
+	(function () {
+		const hideLoader = () => {
+			const l = document.getElementById('loader');
+			if (l) l.classList.add('hide');
+		};
+		const preloadPosters = Promise.all(
+			POSTERS.map((p) => {
+				const img = new Image();
+				img.src = p.src;
+				return img.decode ? img.decode().catch(() => {}) : Promise.resolve();
+			}),
+		);
+		const pageLoaded = new Promise((resolve) => {
+			if (document.readyState === 'complete') resolve();
+			else window.addEventListener('load', resolve, { once: true });
+		});
+		const safetyTimeout = new Promise((resolve) => setTimeout(resolve, 4000));
+		Promise.race([
+			Promise.all([pageLoaded, preloadPosters]),
+			safetyTimeout,
+		]).then(() => setTimeout(hideLoader, 900));
+	})();
+
 	// ➕ To add a game: { emoji, type, name, desc, obj, tools, url, caseId }
 	// caseId links the card to a case study tab (tab id without "tab-")
 	const GAMES = [
@@ -346,14 +373,15 @@
 			url: '',
 			caseId: 'ad',
 		},
-		// Club Identity — comentado até o trabalho estar pronto
-		/*{
-      type: 'Sports Branding · Concept', name: 'Club Identity',
-      desc: 'End-to-end visual identity systems for sports clubs, including matchday creative, weekly schedules, and special edition posters with a focus on consistency.',
-      obj: 'Goal: Develop professional, strategically aligned club designs that enhance fan engagement and institutional presence.',
-      tools: ['Photoshop', 'Club Design', 'Art Direction'], url: '',
-      caseId: 'ci'
-    },*/
+		{
+			type: 'Sports Social Media Design · Ongoing',
+			name: 'Club Identity',
+			desc: "Ongoing visual communication for AC Alfenense's basketball team, covering Game Day posts, results, weekly schedules, and announcements published across the club's social media.",
+			obj: 'Goal: Keep the club present and recognizable online with consistent, fast-turnaround graphics for every matchday and update.',
+			tools: ['Photoshop', 'Social Media', 'Art Direction'],
+			url: '',
+			caseId: 'ci',
+		},
 	];
 
 	/* --------------------------------------------------
@@ -390,7 +418,7 @@
         <div class="proj-row-name">${p.name}</div>
         <div class="proj-row-tools">${p.tools.map((t) => `<span class="proj-card-tool">${t}</span>`).join('')}</div>
         <div class="proj-row-arrow" aria-hidden="true">↗</div>
-        <div class="poster-preview" aria-hidden="true"><img src="${p.src}" alt="${p.alt}" loading="lazy"></div>
+        <div class="poster-preview" aria-hidden="true"><img src="${p.src}" alt="${p.alt}" loading="lazy" decoding="async"></div>
       `;
 			// Teclado: Enter abre o viewer
 			row.addEventListener('keydown', (e) => {
@@ -399,6 +427,37 @@
 					openPoster(i);
 				}
 			});
+
+			// Preview parallax: cache the rect once on enter (instead of on
+			// every mousemove) and rAF-throttle the write, so hovering the
+			// list never forces a synchronous layout per pixel of movement.
+			const preview = row.querySelector('.poster-preview');
+			let rowRect = null;
+			let lastY = 0;
+			let previewTicking = false;
+			row.addEventListener('mouseenter', () => {
+				rowRect = row.getBoundingClientRect();
+			});
+			row.addEventListener(
+				'mousemove',
+				(e) => {
+					lastY = e.clientY;
+					if (previewTicking) return;
+					previewTicking = true;
+					requestAnimationFrame(() => {
+						previewTicking = false;
+						if (!preview || !rowRect) return;
+						const relY = (lastY - rowRect.top - rowRect.height / 2) / rowRect.height;
+						preview.style.marginTop = relY * 16 + 'px';
+					});
+				},
+				{ passive: true },
+			);
+			row.addEventListener('mouseleave', () => {
+				if (preview) preview.style.marginTop = '0px';
+				rowRect = null;
+			});
+
 			posterList.appendChild(row);
 		});
 	}
@@ -499,28 +558,6 @@
 		if (e.key === 'ArrowLeft') openPoster(curPoster - 1);
 		if (e.key === 'ArrowRight') openPoster(curPoster + 1);
 	});
-
-	/* Poster preview parallax */
-	document.addEventListener('mousemove', (e) => {
-		const row = e.target.closest('.poster-row');
-		if (!row) return;
-		const preview = row.querySelector('.poster-preview');
-		if (!preview) return;
-		const rect = row.getBoundingClientRect();
-		const relY = (e.clientY - rect.top - rect.height / 2) / rect.height;
-		preview.style.marginTop = relY * 16 + 'px';
-	});
-	document.addEventListener(
-		'mouseleave',
-		(e) => {
-			const row = e.target.closest?.('.poster-row');
-			if (row) {
-				const p = row.querySelector('.poster-preview');
-				if (p) p.style.marginTop = '0px';
-			}
-		},
-		true,
-	);
 
 	/* --------------------------------------------------
      TESTIMONIALS
@@ -765,5 +802,45 @@
 			},
 			{ passive: true },
 		);
+	}
+
+	/* --------------------------------------------------
+     SECTION REVEAL — whole section eases in as it scrolls
+     into view. Drives --p (0→1) on each .reveal-section based
+     on how far its top has crossed a fixed viewport window —
+     no added scroll length, so it never clips or pins content.
+  -------------------------------------------------- */
+	const reduceMotion = window.matchMedia(
+		'(prefers-reduced-motion: reduce)',
+	).matches;
+	const revealSections = Array.from(
+		document.querySelectorAll('.reveal-section, .reveal-section--fade'),
+	);
+	if (revealSections.length && !reduceMotion) {
+		let ticking = false;
+		const updateReveal = () => {
+			ticking = false;
+			const vh = window.innerHeight;
+			const start = vh * 1.15; // progress = 0 when top is here (still below the fold)
+			const end = vh * -0.15; // progress = 1 when top is here (just above the top)
+			revealSections.forEach((el) => {
+				const rect = el.getBoundingClientRect();
+				const raw = (start - rect.top) / (start - end);
+				const p = Math.min(1, Math.max(0, raw));
+				el.style.setProperty('--p', p.toFixed(3));
+			});
+		};
+		window.addEventListener(
+			'scroll',
+			() => {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(updateReveal);
+				}
+			},
+			{ passive: true },
+		);
+		window.addEventListener('resize', updateReveal, { passive: true });
+		updateReveal();
 	}
 })();

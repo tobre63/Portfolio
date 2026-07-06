@@ -432,6 +432,7 @@ body.on-dark .cursor { background: #fff; border-color: rgba(0,0,0,.6); }
   pointer-events: none; z-index: 600; opacity: 0;
   transition: opacity .28s ease, transform .28s cubic-bezier(.22,1,.36,1);
   box-shadow: 0 28px 64px rgba(0,0,0,.22);
+  will-change: opacity, transform; contain: strict;
 }
 .proj-row:hover .poster-preview { opacity: 1; transform: translateY(-50%) scale(1); }
 .poster-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -559,6 +560,9 @@ body.on-dark .cursor { background: #fff; border-color: rgba(0,0,0,.6); }
 /* Hide label when image loaded successfully */
 .case-img-placeholder:not(.case-img-empty) .case-img-label { display: none; }
 .case-img-placeholder--portrait { aspect-ratio: 4/5 !important; }
+/* Shows the full image without cropping — for prints whose ratio doesn't match the default 16:9 box */
+.case-img-placeholder--fit { aspect-ratio: 3/4 !important; background: var(--bg2); }
+.case-img-placeholder--fit .case-img { object-fit: contain; }
 /* Restore label visibility when image failed */
 .case-img-placeholder.case-img-empty .case-img-label { display: block; }
 
@@ -573,6 +577,26 @@ body.on-dark .cursor { background: #fff; border-color: rgba(0,0,0,.6); }
   cursor: none;
 }
 .case-cta:hover { background: #222; transform: translateY(-2px); }
+
+/* ============================================================
+   SECTION REVEAL — whole section eases in together as it enters
+   the viewport (no added scroll length, no pinning/clipping), so
+   it works regardless of the section's content height. --p (0→1)
+   is set by JS from the section's natural scroll position.
+   ============================================================ */
+.reveal-section {
+  opacity: var(--p, 0);
+  transform: translateY(calc((1 - var(--p, 0)) * 90px)) scale(calc(0.9 + var(--p, 0) * 0.1));
+  will-change: transform, opacity;
+}
+/* Used where the wrapper contains position:fixed descendants (e.g. Work's
+   poster preview) — a transform on an ancestor would break their fixed
+   positioning, so this variant only fades, never transforms. */
+.reveal-section--fade { opacity: var(--p, 0); }
+
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .reveal-section, .reveal-section--fade { opacity: 1; transform: none; }
+}
 
 /* ============================================================
    TESTIMONIALS
@@ -864,13 +888,17 @@ footer { background: var(--dark2); border-top: 1px solid rgba(255,255,255,.04); 
 /* ── Tab bar ── */
 .case-tabs {
   display: flex;
-  margin: 0 0 0;
+  width: fit-content; max-width: 100%; margin: 0 auto;
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
-  scrollbar-width: none;
   gap: 0;
+  scrollbar-width: thin; scrollbar-color: rgba(10,10,10,.28) rgba(10,10,10,.06);
+  padding-bottom: 16px;
 }
-.case-tabs::-webkit-scrollbar { display: none; }
+.case-tabs::-webkit-scrollbar { height: 6px; }
+.case-tabs::-webkit-scrollbar-track { background: rgba(10,10,10,.06); border-radius: 100px; margin: 0 2px; }
+.case-tabs::-webkit-scrollbar-thumb { background: rgba(10,10,10,.28); border-radius: 100px; }
+.case-tabs::-webkit-scrollbar-thumb:hover { background: rgba(10,10,10,.48); }
 
 .case-tab {
   font-family: var(--f-ui);

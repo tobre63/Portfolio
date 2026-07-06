@@ -150,7 +150,7 @@
 
 		<!-- ═══════════════ ABOUT ═══════════════ -->
 		<section id="about" aria-label="About me">
-			<div class="about-inner">
+			<div class="about-inner reveal-section">
 				<div class="about-col-left">
 					<div class="section-label">About</div>
 					<h2 class="about-title">Design.<br />Code.<br />Craft.</h2>
@@ -363,7 +363,7 @@
 		<!-- ═══════════════ PROJECTS ═══════════════ -->
 		<section id="projects" aria-label="Projects">
 			<div class="grid-bg" style="opacity: 0.12" aria-hidden="true"></div>
-			<div class="projects-wrap">
+			<div class="projects-wrap reveal-section--fade">
 				<div class="proj-header fade-in">
 					<h2 class="proj-title">Work</h2>
 					<span class="proj-count" id="projCount" aria-live="polite"></span>
@@ -417,7 +417,7 @@
 		<!-- ═══════════════ CASE STUDY ═══════════════ -->
 		<section id="casestudy" aria-label="Case Studies">
 			<div class="grid-bg" style="opacity: 0.07" aria-hidden="true"></div>
-			<div class="case-wrap">
+			<div class="case-wrap reveal-section">
 				<div class="case-header fade-in">
 					<div class="proj-category-label fade-in">Case Studies</div>
 					<h2 class="case-title">Behind<br />the Work</h2>
@@ -465,11 +465,15 @@
 					>
 						Advertising <em>— Print Design</em>
 					</button>
-					<!-- Club Identity — comentado até o trabalho estar pronto
-      <button class="case-tab" id="tab-ci" role="tab" aria-selected="false" aria-controls="panel-ci">
-        Club Identity <em>— Sports Branding</em>
-      </button>
-      -->
+					<button
+						class="case-tab"
+						id="tab-ci"
+						role="tab"
+						aria-selected="false"
+						aria-controls="panel-ci"
+					>
+						Club Identity <em>— Sports Design</em>
+					</button>
 					<!-- ➕ Novo case study: copia o botão acima, cria o painel abaixo -->
 				</div>
 
@@ -1010,7 +1014,7 @@
 							<div class="cs-acc-body">
 								<div class="case-body case-body--inner">
 									<div class="case-img-row">
-										<div class="case-img-placeholder">
+										<div class="case-img-placeholder case-img-placeholder--fit">
 											<img
 												src="assets/images/CentrodeEstudos.webp"
 												alt="Panfleto de Centro de Estudos"
@@ -1021,7 +1025,7 @@
 												"
 											/><span class="case-img-label">Centro de Estudos</span>
 										</div>
-										<div class="case-img-placeholder">
+										<div class="case-img-placeholder case-img-placeholder--fit">
 											<img
 												src="assets/images/Psicologia.webp"
 												alt="Panfleto de Psicologia"
@@ -1061,7 +1065,7 @@
 					</div>
 				</div>
 
-				<!-- ─── PANEL: CLUB IDENTITY — comentado até o trabalho estar pronto ───
+				<!-- ─── PANEL: CLUB IDENTITY ───
     ╔══════════════════════════════════════════════════════╗
     ║  COMO ADICIONAR UM NOVO CLUBE                        ║
     ║  Mesmo processo que Brand Identity acima.            ║
@@ -1100,17 +1104,14 @@
 										<div class="case-step-content">
 											<h3 class="case-step-title">Brief</h3>
 											<p class="case-step-text">
-												The club's existing visual identity lacked consistency
-												and failed to reflect its true character and presence. I
-												took the initiative to
-												<strong>propose a complete visual overhaul</strong>,
-												presenting multiple concepts across
-												<strong
-													>Instagram posts, stories, banners, and club
-													graphics</strong
-												>. The objective was clear:
-												<strong>create a bold, modern identity</strong> while
-												respecting the club's heritage.
+												As the in-house designer for
+												<strong>AC Alfenense's basketball team</strong>, I'm
+												responsible for the club's
+												<strong>ongoing visual communication</strong> — not a
+												one-off project, but a
+												<strong>recurring weekly workflow</strong> that keeps
+												the club present and consistent across social media,
+												from matchday to matchday.
 											</p>
 										</div>
 									</div>
@@ -1119,30 +1120,22 @@
 										<div class="case-step-content">
 											<h3 class="case-step-title">Process</h3>
 											<p class="case-step-text">
-												The process began with
-												<strong
-													>research into well-structured and visually strong
-													clubs</strong
-												>, identifying what set them apart in terms of branding
-												and communication. In parallel, I worked to understand
-												the club's expectations, presenting
-												<strong
-													>multiple design directions and iterations</strong
-												>
-												to refine the visual approach. A cohesive system was
-												built with
-												<strong>consistency and adaptability in mind</strong>,
-												supported by a colour palette designed to
-												<strong
-													>stand out both on screen and in real-world
-													applications</strong
-												>.
+												Every week follows the same rhythm:
+												<strong>Game Day posts</strong> announcing upcoming
+												matches, <strong>results graphics</strong> published
+												right after the final whistle, and
+												<strong>schedule updates</strong> keeping fans informed
+												of times and venues — all built on a
+												<strong>consistent template system</strong> so the
+												club's presence stays
+												<strong>recognizable and fast to produce</strong>, even
+												under tight, same-day deadlines.
 											</p>
 											<div class="case-img-row">
-												<div class="case-img-placeholder">
+												<div class="case-img-placeholder case-img-placeholder--portrait">
 													<img
-														src="assets/images/ci-badge-design.webp"
-														alt="Badge Design"
+														src="assets/images/alfenense-gameday.webp"
+														alt="Post de Game Day do AC Alfenense"
 														class="case-img"
 														onerror="
 															this.parentElement.classList.add(
@@ -1150,14 +1143,12 @@
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label"
-														>Badge Design &amp; Variants</span
-													>
+													/><span class="case-img-label">Game Day</span>
 												</div>
-												<div class="case-img-placeholder">
+												<div class="case-img-placeholder case-img-placeholder--portrait">
 													<img
-														src="assets/images/ci-kit-mockups.webp"
-														alt="Kit Mockups"
+														src="assets/images/alfenense-resultados.webp"
+														alt="Post de Resultados do AC Alfenense"
 														class="case-img"
 														onerror="
 															this.parentElement.classList.add(
@@ -1165,14 +1156,17 @@
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label">Kit Mockups</span>
+													/><span class="case-img-label">Resultados</span>
 												</div>
 											</div>
-											<div class="case-img-row" style="margin-top: 16px">
-												<div class="case-img-placeholder">
+											<div
+												class="case-img-row"
+												style="margin-top: 16px"
+											>
+												<div class="case-img-placeholder case-img-placeholder--portrait">
 													<img
-														src="assets/images/ci-colour-type.webp"
-														alt="Colour &amp; Type System"
+														src="assets/images/alfenense-horarios.webp"
+														alt="Post de Horários do AC Alfenense"
 														class="case-img"
 														onerror="
 															this.parentElement.classList.add(
@@ -1180,14 +1174,12 @@
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label"
-														>Colour &amp; Type System</span
-													>
+													/><span class="case-img-label">Horários</span>
 												</div>
-												<div class="case-img-placeholder">
+												<div class="case-img-placeholder case-img-placeholder--portrait">
 													<img
-														src="assets/images/ci-social-templates.webp"
-														alt="Social Media Templates"
+														src="assets/images/alfenense-social.webp"
+														alt="Post de redes sociais do AC Alfenense"
 														class="case-img"
 														onerror="
 															this.parentElement.classList.add(
@@ -1195,9 +1187,7 @@
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label"
-														>Social Media Templates</span
-													>
+													/><span class="case-img-label">Social Post</span>
 												</div>
 											</div>
 										</div>
@@ -1207,19 +1197,13 @@
 										<div class="case-step-content">
 											<h3 class="case-step-title">Result</h3>
 											<p class="case-step-text">
-												Delivered a
-												<strong
-													>complete and customizable branding system</strong
-												>, covering everything from
-												<strong
-													>Instagram stories and social content to physical
-													banners and club materials</strong
-												>. The outcome significantly improved the club's visual
-												presence, creating a more
-												<strong
-													>unified, professional, and recognizable
-													identity</strong
-												>.
+												A
+												<strong>reliable, ongoing content pipeline</strong>
+												that keeps the club's social media active and
+												professional all season long, strengthening
+												<strong>fan engagement</strong> and giving
+												<strong>AC Alfenense</strong> a
+												<strong>consistent, modern presence</strong> online.
 											</p>
 										</div>
 									</div>
@@ -1252,7 +1236,7 @@
 		<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
 		<section id="testimonials" aria-label="Testimonials">
 			<div class="grid-bg" style="opacity: 0.06" aria-hidden="true"></div>
-			<div class="testi-wrap">
+			<div class="testi-wrap reveal-section">
 				<div class="testi-header fade-in">
 					<div class="section-label">Testimonials</div>
 					<blockquote class="testi-quote">
