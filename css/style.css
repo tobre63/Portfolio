@@ -538,31 +538,28 @@ body.on-dark .cursor { background: #fff; border-color: rgba(0,0,0,.6); }
 .case-step-text { font-size: 14px; color: var(--muted); line-height: 2; max-width: 600px; }
 .case-step-text strong { color: var(--text); font-weight: 500; }
 
-.case-img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
-.case-img-row--3col { grid-template-columns: 1fr 1fr 1fr; }
+/* Images keep their natural size/aspect ratio — never cropped.
+   Row wraps and centers its contents, so a single image centers itself
+   and a lone last item in a wrapped row doesn't stretch full-width. */
+.case-img-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 28px; }
 .case-img-placeholder {
-  aspect-ratio: 16/9; border-radius: 10px;
+  position: relative; border-radius: 10px;
   background: var(--bg2); border: 1px dashed var(--bg3);
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden; position: relative;
+  overflow: hidden; min-width: 160px; min-height: 120px;
 }
-/* When image is present */
 .case-img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  position: absolute; inset: 0; border-radius: 10px;
+  display: block; max-width: 100%; max-height: 520px;
+  width: auto; height: auto; border-radius: 10px;
 }
 /* Label shown only when no image (empty state) */
 .case-img-label {
   font-family: var(--f-ui); font-size: 10px; letter-spacing: 2px;
   text-transform: uppercase; color: var(--bg3); pointer-events: none;
-  position: relative; z-index: 1;
+  position: relative; z-index: 1; padding: 40px;
 }
 /* Hide label when image loaded successfully */
 .case-img-placeholder:not(.case-img-empty) .case-img-label { display: none; }
-.case-img-placeholder--portrait { aspect-ratio: 4/5 !important; }
-/* Shows the full image without cropping — for prints whose ratio doesn't match the default 16:9 box */
-.case-img-placeholder--fit { aspect-ratio: 3/4 !important; background: var(--bg2); }
-.case-img-placeholder--fit .case-img { object-fit: contain; }
 /* Restore label visibility when image failed */
 .case-img-placeholder.case-img-empty .case-img-label { display: block; }
 
@@ -838,8 +835,7 @@ footer { background: var(--dark2); border-top: 1px solid rgba(255,255,255,.04); 
   /* Case Study */
   #casestudy { padding: 80px 24px; }
   .case-step { grid-template-columns: 48px 1fr; gap: 20px; }
-  .case-img-row { grid-template-columns: 1fr; }
-  .case-img-row--3col { grid-template-columns: 1fr 1fr 1fr; }
+  .case-img { max-height: 360px; }
 
   /* Testimonials */
   .testi-wrap { padding: 0 24px; }
@@ -885,20 +881,35 @@ footer { background: var(--dark2); border-top: 1px solid rgba(255,255,255,.04); 
    CASE STUDY — TABS & PANELS
    ============================================================ */
 
-/* ── Tab bar ── */
+/* ── Tab bar ──
+   Native scrollbars render inconsistently (thick/boxy in some browsers,
+   invisible under the custom cursor in others), so it's hidden and
+   replaced with edge fades + drag-to-scroll (see main.js) for a
+   coherent, editorial feel that matches .bottom-nav's treatment. */
+.case-tabs-wrap {
+  position: relative;
+  width: fit-content; max-width: 100%; margin: 0 auto;
+}
+.case-tabs-wrap::before, .case-tabs-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 16px; width: 32px;
+  pointer-events: none; z-index: 1; opacity: 0; transition: opacity .2s;
+}
+.case-tabs-wrap::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+.case-tabs-wrap::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+.case-tabs-wrap.is-scrolled-start::before { opacity: 1; }
+.case-tabs-wrap.is-scrolled-end::after { opacity: 1; }
 .case-tabs {
   display: flex;
-  width: fit-content; max-width: 100%; margin: 0 auto;
+  width: fit-content; max-width: 100%;
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
   gap: 0;
-  scrollbar-width: thin; scrollbar-color: rgba(10,10,10,.28) rgba(10,10,10,.06);
+  scrollbar-width: none; -ms-overflow-style: none;
   padding-bottom: 16px;
+  cursor: grab;
 }
-.case-tabs::-webkit-scrollbar { height: 6px; }
-.case-tabs::-webkit-scrollbar-track { background: rgba(10,10,10,.06); border-radius: 100px; margin: 0 2px; }
-.case-tabs::-webkit-scrollbar-thumb { background: rgba(10,10,10,.28); border-radius: 100px; }
-.case-tabs::-webkit-scrollbar-thumb:hover { background: rgba(10,10,10,.48); }
+.case-tabs::-webkit-scrollbar { display: none; }
+.case-tabs.dragging { cursor: grabbing; scroll-behavior: auto; }
 
 .case-tab {
   font-family: var(--f-ui);

@@ -744,6 +744,60 @@
 		});
 	});
 
+	// Drag-to-scroll + edge fades, replacing the native scrollbar (hidden in CSS)
+	// so the tab bar stays readable under the site's custom cursor.
+	const caseTabsBar = document.querySelector('.case-tabs');
+	const caseTabsWrap = document.querySelector('.case-tabs-wrap');
+	if (caseTabsBar && caseTabsWrap) {
+		const updateEdges = () => {
+			const { scrollLeft, scrollWidth, clientWidth } = caseTabsBar;
+			caseTabsWrap.classList.toggle('is-scrolled-start', scrollLeft > 4);
+			caseTabsWrap.classList.toggle(
+				'is-scrolled-end',
+				scrollLeft < scrollWidth - clientWidth - 4,
+			);
+		};
+
+		let isDown = false,
+			dragged = false,
+			startX = 0,
+			scrollStart = 0;
+		caseTabsBar.addEventListener('mousedown', (e) => {
+			isDown = true;
+			dragged = false;
+			caseTabsBar.classList.add('dragging');
+			startX = e.pageX;
+			scrollStart = caseTabsBar.scrollLeft;
+		});
+		window.addEventListener('mouseup', () => {
+			isDown = false;
+			caseTabsBar.classList.remove('dragging');
+		});
+		caseTabsBar.addEventListener('mousemove', (e) => {
+			if (!isDown) return;
+			e.preventDefault();
+			const dx = e.pageX - startX;
+			if (Math.abs(dx) > 4) dragged = true;
+			caseTabsBar.scrollLeft = scrollStart - dx;
+		});
+		// Capture phase so a drag gesture can suppress the tab's own click
+		// handler before it fires and switches the panel unintentionally.
+		caseTabsBar.addEventListener(
+			'click',
+			(e) => {
+				if (dragged) {
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			},
+			true,
+		);
+
+		caseTabsBar.addEventListener('scroll', updateEdges);
+		window.addEventListener('resize', updateEdges);
+		updateEdges();
+	}
+
 	/* --------------------------------------------------
      ACCORDION — sub-items inside Brand Identity & Club Identity panels
      Each .cs-acc-trigger toggles its sibling .cs-acc-body open/closed.

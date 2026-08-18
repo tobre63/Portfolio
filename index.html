@@ -424,57 +424,59 @@
 				</div>
 
 				<!-- CASE TABS -->
-				<div
-					class="case-tabs fade-in"
-					role="tablist"
-					aria-label="Select case study"
-				>
-					<button
-						class="case-tab active"
-						id="tab-hg"
-						role="tab"
-						aria-selected="true"
-						aria-controls="panel-hg"
+				<div class="case-tabs-wrap fade-in">
+					<div
+						class="case-tabs"
+						role="tablist"
+						aria-label="Select case study"
 					>
-						Happy Groceries <em>— Front-End</em>
-					</button>
-					<button
-						class="case-tab"
-						id="tab-rb"
-						role="tab"
-						aria-selected="false"
-						aria-controls="panel-rb"
-					>
-						Roblox Assets <em>— Game Art</em>
-					</button>
-					<button
-						class="case-tab"
-						id="tab-bi"
-						role="tab"
-						aria-selected="false"
-						aria-controls="panel-bi"
-					>
-						Brand Identity <em>— Visual Identity</em>
-					</button>
-					<button
-						class="case-tab"
-						id="tab-ad"
-						role="tab"
-						aria-selected="false"
-						aria-controls="panel-ad"
-					>
-						Advertising <em>— Print Design</em>
-					</button>
-					<button
-						class="case-tab"
-						id="tab-ci"
-						role="tab"
-						aria-selected="false"
-						aria-controls="panel-ci"
-					>
-						Club Identity <em>— Sports Design</em>
-					</button>
-					<!-- ➕ Novo case study: copia o botão acima, cria o painel abaixo -->
+						<button
+							class="case-tab active"
+							id="tab-hg"
+							role="tab"
+							aria-selected="true"
+							aria-controls="panel-hg"
+						>
+							Happy Groceries <em>— Front-End</em>
+						</button>
+						<button
+							class="case-tab"
+							id="tab-rb"
+							role="tab"
+							aria-selected="false"
+							aria-controls="panel-rb"
+						>
+							Roblox Assets <em>— Game Art</em>
+						</button>
+						<button
+							class="case-tab"
+							id="tab-bi"
+							role="tab"
+							aria-selected="false"
+							aria-controls="panel-bi"
+						>
+							Brand Identity <em>— Visual Identity</em>
+						</button>
+						<button
+							class="case-tab"
+							id="tab-ad"
+							role="tab"
+							aria-selected="false"
+							aria-controls="panel-ad"
+						>
+							Advertising <em>— Print Design</em>
+						</button>
+						<button
+							class="case-tab"
+							id="tab-ci"
+							role="tab"
+							aria-selected="false"
+							aria-controls="panel-ci"
+						>
+							Club Identity <em>— Sports Design</em>
+						</button>
+						<!-- ➕ Novo case study: copia o botão acima, cria o painel abaixo -->
+					</div>
 				</div>
 
 				<!-- ─── PANEL: HAPPY GROCERIES ─── -->
@@ -528,7 +530,7 @@
 										<img
 											src="assets/images/HappyGroceries1.png"
 											alt="Unity Screenshot"
-											class="case-img"
+											class="case-img" loading="lazy"
 											onerror="
 												this.parentElement.classList.add('case-img-empty');
 												this.style.display = 'none';
@@ -539,7 +541,7 @@
 										<img
 											src="assets/images/HappyGroceries2.png"
 											alt="Aseprite Sprite Sheets"
-											class="case-img"
+											class="case-img" loading="lazy"
 											onerror="
 												this.parentElement.classList.add('case-img-empty');
 												this.style.display = 'none';
@@ -550,7 +552,7 @@
 										<img
 											src="assets/images/HappyGroceries3.png"
 											alt="Gameplay Screenshot"
-											class="case-img"
+											class="case-img" loading="lazy"
 											onerror="
 												this.parentElement.classList.add('case-img-empty');
 												this.style.display = 'none';
@@ -561,7 +563,7 @@
 										<img
 											src="assets/images/HappyGroceries4.png"
 											alt="Menu Screenshot"
-											class="case-img"
+											class="case-img" loading="lazy"
 											onerror="
 												this.parentElement.classList.add('case-img-empty');
 												this.style.display = 'none';
@@ -676,7 +678,7 @@
 													<img
 														src="assets/images/RobloxGUI.jpg"
 														alt="Low Poly Assets"
-														class="case-img"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
@@ -741,7 +743,7 @@
                   <h3 class="case-step-title">Deliverables</h3>
                   <p class="case-step-text">...</p>
                   <div class="case-img-row">
-                    <div class="case-img-placeholder"><img src="assets/images/IMAGEM.webp" alt="Descricao" class="case-img" onerror="this.parentElement.classList.add('case-img-empty'); this.style.display='none'"><span class="case-img-label">Label</span></div>
+                    <div class="case-img-placeholder"><img src="assets/images/IMAGEM.webp" alt="Descricao" class="case-img" loading="lazy" onerror="this.parentElement.classList.add('case-img-empty'); this.style.display='none'"><span class="case-img-label">Label</span></div>
                   </div>
                 </div>
               </div>
@@ -838,7 +840,7 @@
 													<img
 														src="assets/images/BrandTemplate.webp"
 														alt="Logo &amp; Variations"
-														class="case-img"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
@@ -853,7 +855,7 @@
 													<img
 														src="assets/images/HappyBubblesGIF.gif"
 														alt="Colour &amp; Type System"
-														class="case-img"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
@@ -867,12 +869,12 @@
 											</div>
 											<div class="case-img-row" style="margin-top: 16px">
 												<div
-													class="case-img-placeholder case-img-placeholder--portrait"
+													class="case-img-placeholder"
 												>
 													<img
 														src="assets/images/Branding1.jpg"
 														alt="Social Post"
-														class="case-img"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
@@ -882,12 +884,12 @@
 													/><span class="case-img-label">Social Post</span>
 												</div>
 												<div
-													class="case-img-placeholder case-img-placeholder--portrait"
+													class="case-img-placeholder"
 												>
 													<img
 														src="assets/images/Branding3.jpg"
 														alt="Brand Post"
-														class="case-img"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
@@ -999,22 +1001,22 @@
 							<div class="cs-acc-body">
 								<div class="case-body case-body--inner">
 									<div class="case-img-row">
-										<div class="case-img-placeholder case-img-placeholder--fit">
+										<div class="case-img-placeholder">
 											<img
 												src="assets/images/CentrodeEstudos.webp"
 												alt="Panfleto de Centro de Estudos"
-												class="case-img"
+												class="case-img" loading="lazy"
 												onerror="
 													this.parentElement.classList.add('case-img-empty');
 													this.style.display = 'none';
 												"
 											/><span class="case-img-label">Centro de Estudos</span>
 										</div>
-										<div class="case-img-placeholder case-img-placeholder--fit">
+										<div class="case-img-placeholder">
 											<img
 												src="assets/images/Psicologia.webp"
 												alt="Panfleto de Psicologia"
-												class="case-img"
+												class="case-img" loading="lazy"
 												onerror="
 													this.parentElement.classList.add('case-img-empty');
 													this.style.display = 'none';
@@ -1040,8 +1042,8 @@
           <div class="cs-acc-body">
             <div class="case-body case-body--inner">
               <div class="case-img-row">
-                <div class="case-img-placeholder"><img src="assets/images/IMAGEM1.webp" alt="Descricao 1" class="case-img" onerror="this.parentElement.classList.add('case-img-empty'); this.style.display='none'"><span class="case-img-label">Label 1</span></div>
-                <div class="case-img-placeholder"><img src="assets/images/IMAGEM2.webp" alt="Descricao 2" class="case-img" onerror="this.parentElement.classList.add('case-img-empty'); this.style.display='none'"><span class="case-img-label">Label 2</span></div>
+                <div class="case-img-placeholder"><img src="assets/images/IMAGEM1.webp" alt="Descricao 1" class="case-img" loading="lazy" onerror="this.parentElement.classList.add('case-img-empty'); this.style.display='none'"><span class="case-img-label">Label 1</span></div>
+                <div class="case-img-placeholder"><img src="assets/images/IMAGEM2.webp" alt="Descricao 2" class="case-img" loading="lazy" onerror="this.parentElement.classList.add('case-img-empty'); this.style.display='none'"><span class="case-img-label">Label 2</span></div>
               </div>
             </div>
           </div>
@@ -1117,67 +1119,57 @@
 												under tight, same-day deadlines.
 											</p>
 											<div class="case-img-row">
-												<div
-													class="case-img-placeholder case-img-placeholder--portrait"
-												>
+												<div class="case-img-placeholder">
 													<img
-														src="assets/images/alfenense-gameday.webp"
-														alt="Post de Game Day do AC Alfenense"
-														class="case-img"
+														src="assets/images/Alfenense1.webp"
+														alt="Post de boas-vindas ao novo diretor Diogo Couto do AC Alfenense"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label">Game Day</span>
+													/><span class="case-img-label">Boas-vindas</span>
 												</div>
-												<div
-													class="case-img-placeholder case-img-placeholder--portrait"
-												>
+												<div class="case-img-placeholder">
 													<img
-														src="assets/images/alfenense-resultados.webp"
-														alt="Post de Resultados do AC Alfenense"
-														class="case-img"
+														src="assets/images/Alfenense2.webp"
+														alt="Post de calendário de exames médicos anuais do AC Alfenense"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label">Resultados</span>
+													/><span class="case-img-label">Exames Médicos</span>
 												</div>
-											</div>
-											<div class="case-img-row" style="margin-top: 16px">
-												<div
-													class="case-img-placeholder case-img-placeholder--portrait"
-												>
+												<div class="case-img-placeholder">
 													<img
-														src="assets/images/alfenense-horarios.webp"
-														alt="Post de Horários do AC Alfenense"
-														class="case-img"
+														src="assets/images/Alfenense3.webp"
+														alt="Post de Match Day: SUB18 'A' do AC Alfenense vs SC Vasco da Gama"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label">Horários</span>
+													/><span class="case-img-label">Match Day</span>
 												</div>
-												<div
-													class="case-img-placeholder case-img-placeholder--portrait"
-												>
+												<div class="case-img-placeholder">
 													<img
-														src="assets/images/alfenense-social.webp"
-														alt="Post de redes sociais do AC Alfenense"
-														class="case-img"
+														src="assets/images/Alfenense4.webp"
+														alt="Post de Match Day do AC Alfenense com localização do Complexo Desportivo"
+														class="case-img" loading="lazy"
 														onerror="
 															this.parentElement.classList.add(
 																'case-img-empty',
 															);
 															this.style.display = 'none';
 														"
-													/><span class="case-img-label">Social Post</span>
+													/><span class="case-img-label">Match Day — Local</span>
 												</div>
 											</div>
 										</div>
