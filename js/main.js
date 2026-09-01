@@ -189,7 +189,9 @@
 		},
 		{ threshold: 0.08 },
 	);
-	document.querySelectorAll('.fade-in').forEach((el) => fadeObs.observe(el));
+	document
+		.querySelectorAll('.fade-in, .reveal-section, .reveal-section--fade')
+		.forEach((el) => fadeObs.observe(el));
 
 	/* --------------------------------------------------
      LOCAL TIME — Lisbon
@@ -563,18 +565,11 @@
      TESTIMONIALS
   -------------------------------------------------- */
 	const testimonials = [
-		/*{
-      text: "Placeholder",
-      name: "Miguel Ribeiro",
-      role: "Brand Manager at AC Alfenense",
-      initials: "MR",
-      photo: "" // ex: "assets/images/testimonials/miguel-ribeiro.webp"
-    },*/
 		{
 			text: 'He’s creative, professional, and incredibly good with the tools he uses. His work has made a real difference in the way Alfenense presents itself, and basketball has grown a lot because of his contribution. It’s clear he’s passionate about what he does.',
 			name: 'Diogo Couto',
 			role: 'Alfenense Basketball Director',
-			initials: 'ED',
+			initials: 'DC',
 			photo: '', // ex: "assets/images/testimonials/eleven-degre.webp"
 		},
 		// Carla Malafaya — comentado temporariamente
@@ -856,45 +851,5 @@
 			},
 			{ passive: true },
 		);
-	}
-
-	/* --------------------------------------------------
-     SECTION REVEAL — whole section eases in as it scrolls
-     into view. Drives --p (0→1) on each .reveal-section based
-     on how far its top has crossed a fixed viewport window —
-     no added scroll length, so it never clips or pins content.
-  -------------------------------------------------- */
-	const reduceMotion = window.matchMedia(
-		'(prefers-reduced-motion: reduce)',
-	).matches;
-	const revealSections = Array.from(
-		document.querySelectorAll('.reveal-section, .reveal-section--fade'),
-	);
-	if (revealSections.length && !reduceMotion) {
-		let ticking = false;
-		const updateReveal = () => {
-			ticking = false;
-			const vh = window.innerHeight;
-			const start = vh * 1.15; // progress = 0 when top is here (still below the fold)
-			const end = vh * -0.15; // progress = 1 when top is here (just above the top)
-			revealSections.forEach((el) => {
-				const rect = el.getBoundingClientRect();
-				const raw = (start - rect.top) / (start - end);
-				const p = Math.min(1, Math.max(0, raw));
-				el.style.setProperty('--p', p.toFixed(3));
-			});
-		};
-		window.addEventListener(
-			'scroll',
-			() => {
-				if (!ticking) {
-					ticking = true;
-					requestAnimationFrame(updateReveal);
-				}
-			},
-			{ passive: true },
-		);
-		window.addEventListener('resize', updateReveal, { passive: true });
-		updateReveal();
 	}
 })();

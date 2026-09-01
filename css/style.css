@@ -340,13 +340,13 @@ body.on-dark .cursor { background: #fff; border-color: rgba(0,0,0,.6); }
 
 /* About — Profile Photo */
 .about-photo-wrap {
-  display: flex; align-items: center; gap: 18px;
-  margin-bottom: 24px; padding: 18px 20px;
+  display: flex; align-items: center; gap: 22px;
+  margin-bottom: 24px; padding: 20px 24px;
   background: rgba(240,238,234,.04); border: 1px solid rgba(240,238,234,.08);
-  border-radius: 14px;
+  border-radius: 18px;
 }
 .about-photo-frame {
-  width: 68px; height: 68px; border-radius: 50%; flex-shrink: 0;
+  width: 108px; height: 108px; border-radius: 50%; flex-shrink: 0;
   background: rgba(240,238,234,.08); border: 2px solid rgba(240,238,234,.12);
   overflow: hidden; position: relative;
   display: flex; align-items: center; justify-content: center;
@@ -357,15 +357,15 @@ body.on-dark .cursor { background: #fff; border-color: rgba(0,0,0,.6); }
 .about-photo-initials {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--f-ui); font-size: 18px; font-weight: 800;
+  font-family: var(--f-ui); font-size: 26px; font-weight: 800;
   color: rgba(240,238,234,.45); letter-spacing: 1px;
   pointer-events: none;
 }
 /* Show initials by default; hide when photo loads */
 .about-photo-frame:has(.about-photo[src]:not([src=""])) .about-photo-initials { display: none; }
 .about-photo-caption { display: flex; flex-direction: column; gap: 3px; }
-.about-photo-name { font-family: var(--f-ui); font-size: 14px; font-weight: 700; color: var(--cream); letter-spacing: .5px; }
-.about-photo-loc { font-family: var(--f-ui); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,238,234,.3); }
+.about-photo-name { font-family: var(--f-ui); font-size: 16px; font-weight: 700; color: var(--cream); letter-spacing: .5px; }
+.about-photo-loc { font-family: var(--f-ui); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,238,234,.3); }
 
 .stats-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
@@ -576,23 +576,24 @@ body.on-dark .cursor { background: #fff; border-color: rgba(0,0,0,.6); }
 .case-cta:hover { background: #222; transform: translateY(-2px); }
 
 /* ============================================================
-   SECTION REVEAL — whole section eases in together as it enters
-   the viewport (no added scroll length, no pinning/clipping), so
-   it works regardless of the section's content height. --p (0→1)
-   is set by JS from the section's natural scroll position.
+   SECTION REVEAL — whole section eases in once as it enters the
+   viewport (same one-shot IntersectionObserver as .fade-in below),
+   then stays visible — including if the user scrolls back up, so
+   it never re-dims text they're in the middle of reading.
    ============================================================ */
 .reveal-section {
-  opacity: var(--p, 0);
-  transform: translateY(calc((1 - var(--p, 0)) * 90px)) scale(calc(0.9 + var(--p, 0) * 0.1));
-  will-change: transform, opacity;
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .5s ease, transform .5s ease;
 }
+.reveal-section.visible { opacity: 1; transform: none; }
 /* Used where the wrapper contains position:fixed descendants (e.g. Work's
    poster preview) — a transform on an ancestor would break their fixed
    positioning, so this variant only fades, never transforms. */
-.reveal-section--fade { opacity: var(--p, 0); }
+.reveal-section--fade { opacity: 0; transition: opacity .5s ease; }
+.reveal-section--fade.visible { opacity: 1; }
 
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
-  .reveal-section, .reveal-section--fade { opacity: 1; transform: none; }
+  .reveal-section, .reveal-section--fade { opacity: 1; transform: none; transition: none; }
 }
 
 /* ============================================================
