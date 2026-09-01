@@ -175,7 +175,6 @@
 		});
 	}
 
-
 	/* --------------------------------------------------
      FADE-IN ON SCROLL
   -------------------------------------------------- */
@@ -447,7 +446,8 @@
 					requestAnimationFrame(() => {
 						previewTicking = false;
 						if (!preview || !rowRect) return;
-						const relY = (lastY - rowRect.top - rowRect.height / 2) / rowRect.height;
+						const relY =
+							(lastY - rowRect.top - rowRect.height / 2) / rowRect.height;
 						preview.style.marginTop = relY * 16 + 'px';
 					});
 				},
@@ -571,9 +571,9 @@
       photo: "" // ex: "assets/images/testimonials/miguel-ribeiro.webp"
     },*/
 		{
-			text: 'Placeholder',
-			name: 'Eleven Degre',
-			role: 'Roblox Game Developer',
+			text: 'He’s creative, professional, and incredibly good with the tools he uses. His work has made a real difference in the way Alfenense presents itself, and basketball has grown a lot because of his contribution. It’s clear he’s passionate about what he does.',
+			name: 'Diogo Couto',
+			role: 'Alfenense Basketball Director',
 			initials: 'ED',
 			photo: '', // ex: "assets/images/testimonials/eleven-degre.webp"
 		},
